@@ -28,6 +28,9 @@ func main() {
 		return
 	}
 
+	gmagick.Initialize()
+	defer gmagick.Terminate()
+
 	thumbDir := "/tmp/thumb-cgo"
 	os.RemoveAll(thumbDir)
 	os.MkdirAll(thumbDir, os.ModePerm)
@@ -50,9 +53,6 @@ func MkImageThumb(orig string, dest string, dstW int) error {
 	if dstW <= 0 {
 		panic("dst image width can not be 0")
 	}
-	gmagick.Initialize()
-	defer gmagick.Terminate()
-
 	mw := gmagick.NewMagickWand()
 	defer mw.Destroy()
 
